@@ -15,7 +15,7 @@ class App extends Component {
       <div>
         <AccountsUIWrapper />
         <Navigation />
-        {React.cloneElement(this.props.children, {
+        {this.props.children && React.cloneElement(this.props.children, {
           currentUser: this.props.currentUser
         })}
       </div>
@@ -25,6 +25,6 @@ class App extends Component {
 
 export default createContainer(() => {
   return ({
-    currentUser: Meteor.user()
+    currentUser: Meteor.user() || { _id: null, name: "" }
   })
 }, App)

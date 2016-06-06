@@ -10,7 +10,7 @@ export default class ReceivablesContainer extends Component {
   render() {
     return (
       <div>
-        <ReceivablesPage ...this.props />
+        <ReceivablesPage {...this.props} />
       </div>
     )
   }

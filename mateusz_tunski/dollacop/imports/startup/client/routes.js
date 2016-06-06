@@ -1,12 +1,12 @@
 import App from "/imports/ui/containers/App"
-import DebtsPage from "/imports/ui/pages/DebtsPage"
-import ReceivablesPage from "/imports/ui/pages/ReceivablesPage"
+import DebtsContainer from "/imports/ui/containers/DebtsContainer"
+import ReceivablesContainer from "/imports/ui/containers/ReceivablesContainer"
 
 export default {
   path: "/",
   component: App,
-  indexRoute: { component: DebtsPage },
+  indexRoute: { component: DebtsContainer },
   childRoutes: [
-    { path: "receivables", component: ReceivablesPage },
+    { path: "receivables", component: ReceivablesContainer },
   ]
 }
