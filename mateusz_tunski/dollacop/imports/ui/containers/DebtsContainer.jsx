@@ -26,6 +26,6 @@ class DebtsContainer extends Component {
 
 export default createContainer((props) => {
   return ({
-    debts: Debts.find({"debtors._id": props.currentUser._id}).fetch()
+    debts: Debts.find({"debtors._id": props.currentUser._id, settled: false }).fetch()
   })
 }, DebtsContainer)

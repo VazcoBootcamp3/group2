@@ -6,7 +6,12 @@ export default class DebtsListItem extends Component {
     creditor: PropTypes.object,
     debtors: PropTypes.arrayOf(PropTypes.object),
     items: PropTypes.arrayOf(PropTypes.object),
-    settled: PropTypes.bool
+    settled: PropTypes.bool,
+    settleDebt: PropTypes.func
+  }
+
+  handleClick = () => {
+    this.props.settleDebt(this.props._id)
   }
 
   renderDebtors() {

@@ -5,7 +5,8 @@ import DebtsListItem from "./DebtsListItem"
 export default class DebtsList extends Component {
   static propTypes = {
     currentUser: PropTypes.object,
-    debts: PropTypes.arrayOf(PropTypes.object)
+    debts: PropTypes.arrayOf(PropTypes.object),
+    settleDebt: PropTypes.func
   }
 
   renderDebts() {
@@ -15,6 +16,7 @@ export default class DebtsList extends Component {
           <DebtsListItem
             {...debt}
             currentUser={this.props.currentUser}
+            settleDebt={this.props.settleDebt}
           />
         </div>
       )
