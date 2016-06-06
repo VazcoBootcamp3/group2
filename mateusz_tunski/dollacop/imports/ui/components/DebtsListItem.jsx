@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from "react"
 
 export default class DebtsListItem extends Component {
   static propTypes = {
+    currentUser: PropTypes.object,
     creditor: PropTypes.object,
     debtors: PropTypes.arrayOf(PropTypes.object),
     items: PropTypes.arrayOf(PropTypes.object),
@@ -25,12 +26,23 @@ export default class DebtsListItem extends Component {
     )
   }
 
+  rednderSettle() {
+    if (this.props.currentUser._id === this.props.creditor._id) {
+      return(
+        <button onClick={this.handleClick}>
+          Settle
+        </button>
+      )
+    }
+  }
+
   render() {
     return (
       <div>
         <p>Creditor: {this.props.creditor.name}</p>
         <ul>{this.renderItems()}</ul>
         <p>Debtors: {this.renderDebtors()}</p>
+        {this.rednderSettle()}
       </div>
     )
   }
