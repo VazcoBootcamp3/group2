@@ -18,7 +18,12 @@ export default class DebtForm extends Component {
 
   handleSubmit = (ev) => {
     ev.preventDefault()
+
     this.props.addDebt(this.state)
+    this.setState({
+      debtors: [],
+      items: [{ name: "", price: "" }]
+    })
   }
 
   handleDebtorChange = (ev) => {
@@ -111,7 +116,8 @@ export default class DebtForm extends Component {
               <label key={user._id}>
                 <input
                   type="checkbox"
-                  defaultValue={JSON.stringify({ _id: user._id, name: user.profile.name })}
+                  checked={_.some(this.state.debtors, ["_id", user._id])}
+                  value={JSON.stringify({ _id: user._id, name: user.profile.name })}
                   onChange={this.handleDebtorChange}
                 />
                 {user.profile.name}
@@ -143,5 +149,3 @@ export default class DebtForm extends Component {
     )
   }
 }
-
-
