@@ -5,6 +5,8 @@ import { Meteor } from "meteor/meteor"
 import Navigation from "../components/Navigation"
 import AccountsUIWrapper from "../components/AccountsUIWrapper.jsx"
 
+import "../styles/main.scss"
+
 class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
