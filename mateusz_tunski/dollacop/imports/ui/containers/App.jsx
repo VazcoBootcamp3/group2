@@ -10,14 +10,24 @@ class App extends Component {
     currentUser: PropTypes.object
   }
 
+  renderLoggedInItems() {
+    if(this.props.currentUser._id) {
+      return (
+        <div>
+          <Navigation />
+          {this.props.children && React.cloneElement(this.props.children, {
+            currentUser: this.props.currentUser
+          })}
+        </div>
+      )
+    }
+  }
+
   render() {
     return (
       <div>
         <AccountsUIWrapper />
-        <Navigation />
-        {this.props.children && React.cloneElement(this.props.children, {
-          currentUser: this.props.currentUser
-        })}
+        {this.renderLoggedInItems()}
       </div>
     )
   }
