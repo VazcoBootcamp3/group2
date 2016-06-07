@@ -52,6 +52,9 @@ class ReceivablesContainer extends Component {
 
 export default createContainer((props) => {
   return ({
-    receivables: Debts.find({"creditor._id": props.currentUser._id, settled: false}).fetch(),
+    receivables: Debts.find({
+      "creditor._id": props.currentUser._id,
+      settled: false
+    }, { sort: { createdAt: -1 }}).fetch(),
   })
 }, ReceivablesContainer)

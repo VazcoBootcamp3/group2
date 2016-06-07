@@ -7,7 +7,8 @@ export default class Navigation extends Component {
     return (
       <nav>
         <ul>
-          <li><NavLink to="/" onlyActiveOnIndex>Your debts</NavLink></li>
+          <li><NavLink to="/debts/new">New debt</NavLink></li>
+          <li><NavLink to="/">Your debts</NavLink></li>
           <li><NavLink to="/receivables">Your receivables</NavLink></li>
         </ul>
       </nav>
