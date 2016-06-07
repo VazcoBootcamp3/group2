@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from "react"
 
 export default class DebtsListItem extends Component {
   static propTypes = {
+    _id: PropTypes.string,
     currentUser: PropTypes.object,
     creditor: PropTypes.object,
     debtors: PropTypes.arrayOf(PropTypes.object),
     items: PropTypes.arrayOf(PropTypes.object),
-    settled: PropTypes.bool,
     settleDebt: PropTypes.func
   }
 
@@ -14,13 +14,17 @@ export default class DebtsListItem extends Component {
     this.props.settleDebt(this.props._id)
   }
 
-  renderDebtors() {
-    return (
-      this.props.debtors.map((debtor, index) => {
-        const affix = (this.props.debtors.length === index + 1 ? "" : ", ")
-        return (`${debtor.name}${affix}`)
-      })
-    )
+  rednderSettle() {
+    const { currentUser, creditor } = this.props
+
+    if (currentUser._id === creditor._id) {
+      return (
+        <button onClick={this.handleClick}>
+          Settle
+        </button>
+      )
+    }
+    return null
   }
 
   renderItems() {
@@ -30,15 +34,15 @@ export default class DebtsListItem extends Component {
       )
     )
   }
+  renderDebtors() {
+    const { debtors } = this.props
 
-  rednderSettle() {
-    if (this.props.currentUser._id === this.props.creditor._id) {
-      return(
-        <button onClick={this.handleClick}>
-          Settle
-        </button>
-      )
-    }
+    return (
+      debtors.map((debtor, index) => {
+        const affix = (debtors.length === index + 1 ? "" : ", ")
+        return (`${debtor.name}${affix}`)
+      })
+    )
   }
 
   render() {
@@ -52,5 +56,3 @@ export default class DebtsListItem extends Component {
     )
   }
 }
-
-

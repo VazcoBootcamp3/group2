@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from "react"
 import { createContainer } from "meteor/react-meteor-data"
+import { Meteor } from "meteor/meteor"
 
 import Navigation from "../components/Navigation"
 import AccountsUIWrapper from "../components/AccountsUIWrapper.jsx"
@@ -10,17 +11,22 @@ class App extends Component {
     currentUser: PropTypes.object
   }
 
+  static defaultProps = {
+    currentUser: { _id: null, name: "" }
+  }
+
   renderLoggedInItems() {
-    if(this.props.currentUser._id) {
+    const { children, currentUser } = this.props
+
+    if (currentUser._id) {
       return (
         <div>
           <Navigation />
-          {this.props.children && React.cloneElement(this.props.children, {
-            currentUser: this.props.currentUser
-          })}
+          {children && React.cloneElement(children, { currentUser })}
         </div>
       )
     }
+    return null
   }
 
   render() {
@@ -33,8 +39,6 @@ class App extends Component {
   }
 }
 
-export default createContainer(() => {
-  return ({
-    currentUser: Meteor.user() || { _id: null, name: "" }
-  })
-}, App)
+export default createContainer((props) => ({
+  currentUser: Meteor.user() || props.currentUser
+}), App)

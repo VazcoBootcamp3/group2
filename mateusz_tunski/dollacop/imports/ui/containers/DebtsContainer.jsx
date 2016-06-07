@@ -4,39 +4,36 @@ import { Meteor } from "meteor/meteor"
 
 import { Debts } from "/imports/api/Debts"
 
-import DebtsPage from "../pages/DebtsPage"
-
 class DebtsContainer extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
-    currentUser: PropTypes.object,
-    debts: PropTypes.arrayOf(PropTypes.object)
+    currentUser: PropTypes.object
   }
 
   static defaultProps = {
-    debts: []
+    debts: [],
+    users: []
   }
 
   addDebt = (debt) => {
+    const { _id, profile: { name } } = this.props.currentUser
+    const creditor = { _id, name }
+
     Debts.insert({
-      creditor: {
-        _id: this.props.currentUser._id,
-        name: this.props.currentUser.profile.name
-      },
-      debtors: debt.debtors,
-      items: debt.items,
+      ...debt,
+      creditor,
       settled: false,
       createdAt: Date.now()
     })
   }
 
   render() {
+    const { children, ...others } = this.props
+
     return (
       <div>
-        {this.props.children && React.cloneElement(this.props.children, {
-          currentUser: this.props.currentUser,
-          debts: this.props.debts,
-          users: this.props.users,
+        {children && React.cloneElement(children, {
+          ...others,
           addDebt: this.addDebt
         })}
       </div>
@@ -45,8 +42,10 @@ class DebtsContainer extends Component {
 }
 
 export default createContainer((props) => {
+  const { currentUser } = props
+
   return ({
-    debts: Debts.find({"debtors._id": props.currentUser._id, settled: false }).fetch(),
-    users: Meteor.users.find({ _id: { $not: props.currentUser._id } }).fetch()
+    debts: Debts.find({ "debtors._id": currentUser._id, settled: false }).fetch(),
+    users: Meteor.users.find({ _id: { $not: currentUser._id } }).fetch()
   })
 }, DebtsContainer)

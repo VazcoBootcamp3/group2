@@ -3,7 +3,7 @@ import _ from "lodash"
 
 export default class DebtForm extends Component {
   static propTypes = {
-    currentUser: PropTypes.object,
+    users: PropTypes.arrayOf(PropTypes.object),
     addDebt: PropTypes.func
   }
 
@@ -27,7 +27,7 @@ export default class DebtForm extends Component {
   }
 
   handleDebtorChange = (ev) => {
-    let debtors = this.state.debtors
+    const { debtors } = this.state
     const debtor = JSON.parse(ev.target.value)
 
     if (ev.target.checked) {
@@ -36,65 +36,65 @@ export default class DebtForm extends Component {
       _.remove(debtors, el => el._id === debtor._id)
     }
 
-    this.setState({ debtors: debtors })
+    this.setState({ debtors })
   }
 
   handleNameChange = (ev, index) => {
-    const items = this.state.items
+    const { items } = this.state
     items[index].name = ev.target.value
-    this.setState({ items: items })
+    this.setState({ items })
   }
 
   handlePriceChange = (ev, index) => {
-    const items = this.state.items
+    const { items } = this.state
     items[index].price = parseInt(ev.target.value, 10)
-    this.setState({ items: items })
+    this.setState({ items })
   }
 
   addItem = () => {
-    const items = this.state.items
+    const { items } = this.state
     items.push({ name: "", price: "" })
-    this.setState({ items: items })
+    this.setState({ items })
   }
 
   removeItem = (index) => {
-    const items = this.state.items
+    const { items } = this.state
     items.splice(index, 1)
-    this.setState({ items: items })
+    this.setState({ items })
   }
 
   renderItemsFields() {
+    const { items } = this.state
+
     return (
       <fieldset>
         <legend>Items</legend>
         {
-          this.state.items.map((item, index) => {
-            return (
-              <div key={index}>
-                <input
-                  type="text"
-                  value={item.name}
-                  required
-                  placeholder="Name"
-                  onChange={(ev) => { this.handleNameChange(ev, index) }}
-                />
-                <input
-                  type="number"
-                  value={item.price}
-                  required
-                  placeholder="Price"
-                  onChange={(ev) => { this.handlePriceChange(ev, index) }}
-                />
-                <button
-                  type="button"
-                  disabled={this.state.items.length === 1}
-                  onClick={() => { this.removeItem(index) }}
-                >
-                  Remove item
-                </button>
-              </div>
-            )
-          })
+          items.map((item, index) => (
+            <div key={index}>
+              <input
+                type="text"
+                value={item.name}
+                required
+                placeholder="Name"
+                onChange={(ev) => { this.handleNameChange(ev, index) }}
+              />
+              <input
+                type="number"
+                value={item.price}
+                required
+                placeholder="Price"
+                onChange={(ev) => { this.handlePriceChange(ev, index) }}
+              />
+              <button
+                type="button"
+                disabled={items.length === 1}
+                onClick={() => { this.removeItem(index) }}
+              >
+                Remove item
+              </button>
+            </div>
+          ))
         }
         <button
           type="button"
@@ -111,20 +111,17 @@ export default class DebtForm extends Component {
       <fieldset>
         <legend>Debtors</legend>
         {
-          this.props.users.map(user => {
-            return (
-              <label key={user._id}>
-                <input
-                  type="checkbox"
-                  checked={_.some(this.state.debtors, ["_id", user._id])}
-                  value={JSON.stringify({ _id: user._id, name: user.profile.name })}
-                  onChange={this.handleDebtorChange}
-                />
-                {user.profile.name}
-              </label>
-            )
-          })
-
+          this.props.users.map(user => (
+            <label key={user._id}>
+              <input
+                type="checkbox"
+                checked={_.some(this.state.debtors, ["_id", user._id])}
+                value={JSON.stringify({ _id: user._id, name: user.profile.name })}
+                onChange={this.handleDebtorChange}
+              />
+              {user.profile.name}
+            </label>
+          ))
         }
       </fieldset>
     )
