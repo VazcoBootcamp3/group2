@@ -5,14 +5,14 @@ import { Debts } from "/imports/api/Debts"
 let index = 1
 do {
   if (!Accounts.findUserByEmail(`u${index}@t.com`)) {
-    const id = Accounts.createUser({
+    Accounts.createUser({
       email: `u${index}@t.com`,
       password: "password",
       profile: { name: `u${index}` }
     })
   }
   index++
-} while(index <= 5)
+} while (index <= 5)
 
 const users = Meteor.users.find({}).fetch()
 
@@ -37,7 +37,7 @@ if (Debts.find().count() === 0) {
     debtors: [
       { _id: users[1]._id, name: users[1].profile.name }
     ],
-    items: [ {name: "testitem4", price: 250 }],
+    items: [{ name: "testitem4", price: 250 }],
     settled: false,
     createdAt: Date.now()
   })

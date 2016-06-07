@@ -10,13 +10,17 @@ if (Meteor.isServer) {
         throw new Meteor.Error("unauthorized")
       }
 
-      return(
+      return (
         Debts.aggregate([
           { $match: { "creditor._id": this.userId, settled: false } },
-          { $unwind : "$items" },
-          { $unwind : "$debtors" },
-          { $group: { _id: "$debtors._id", debtor: { $last: "$debtors" }, total: { $sum: "$items.price" } } },
-          { $project : { _id: 0, debtor: "$debtor", total: "$total" } },
+          { $unwind: "$items" },
+          { $unwind: "$debtors" },
+          { $group: {
+            _id: "$debtors._id",
+            debtor: { $last: "$debtors" },
+            total: { $sum: "$items.price" }
+          } },
+          { $project: { _id: 0, debtor: "$debtor", total: "$total" } },
           { $sort: { total: - 1 } }
         ])
       )
