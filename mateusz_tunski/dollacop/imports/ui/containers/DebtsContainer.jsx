@@ -3,6 +3,7 @@ import { createContainer } from "meteor/react-meteor-data"
 import { Meteor } from "meteor/meteor"
 
 import { Debts } from "/imports/api/Debts"
+import "/imports/api/userData"
 
 class DebtsContainer extends Component {
   static propTypes = {
@@ -15,33 +16,20 @@ class DebtsContainer extends Component {
     users: []
   }
 
-  addDebt = (debt) => {
-    const { _id, profile: { name } } = this.props.currentUser
-    const creditor = { _id, name }
-
-    Debts.insert({
-      ...debt,
-      creditor,
-      settled: false,
-      createdAt: Date.now()
-    })
-  }
-
   render() {
     const { children, ...others } = this.props
 
     return (
       <div>
-        {children && React.cloneElement(children, {
-          ...others,
-          addDebt: this.addDebt
-        })}
+        {children && React.cloneElement(children, { ...others })}
       </div>
     )
   }
 }
 
 export default createContainer((props) => {
+  Meteor.subscribe("debts")
+  Meteor.subscribe("userData")
   const { currentUser } = props
 
   return ({

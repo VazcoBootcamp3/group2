@@ -3,7 +3,6 @@ accounts-password@1.1.9-rc.4
 accounts-ui@1.1.9
 accounts-ui-unstyled@1.1.12
 allow-deny@1.0.5-rc.4
-autopublish@1.0.7
 autoupdate@1.2.10-rc.4
 babel-compiler@6.8.0-rc.4
 babel-runtime@0.1.9-rc.4
@@ -41,7 +40,6 @@ htmljs@1.0.10-rc.4
 http@1.1.6-rc.4
 httpstr:normalize.scss@1.1.5
 id-map@1.0.8-rc.4
-insecure@1.0.7
 jquery@1.11.9-rc.4
 less@2.6.1-rc.4
 livedata@1.0.18

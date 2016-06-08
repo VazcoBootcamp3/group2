@@ -14,16 +14,12 @@ class ReceivablesContainer extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      summaries: []
-    }
-
+    this.state = { summaries: [] }
     this.updateSummaries()
   }
 
-
   settleDebt = (debtId) => {
-    Debts.update({ _id: debtId }, { $set: { settled: true } })
+    Meteor.call("debts.settle", debtId)
     this.updateSummaries()
   }
 
@@ -44,9 +40,13 @@ class ReceivablesContainer extends Component {
   }
 }
 
-export default createContainer((props) => ({
-  receivables: Debts.find({
-    "creditor._id": props.currentUser._id,
-    settled: false
-  }, { sort: { createdAt: -1 } }).fetch(),
-}), ReceivablesContainer)
+export default createContainer((props) => {
+  Meteor.subscribe("debts")
+
+  return ({
+    receivables: Debts.find({
+      "creditor._id": props.currentUser._id,
+      settled: false
+    }, { sort: { createdAt: -1 } }).fetch()
+  })
+}, ReceivablesContainer)

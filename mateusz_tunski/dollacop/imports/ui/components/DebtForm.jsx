@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from "react"
+import { Meteor } from "meteor/meteor"
 import _ from "lodash"
 
 export default class DebtForm extends Component {
   static propTypes = {
-    users: PropTypes.arrayOf(PropTypes.object),
-    addDebt: PropTypes.func
+    users: PropTypes.arrayOf(PropTypes.object)
   }
 
   constructor(props) {
@@ -19,7 +19,9 @@ export default class DebtForm extends Component {
   handleSubmit = (ev) => {
     ev.preventDefault()
 
-    this.props.addDebt(this.state)
+    const { debtors, items } = this.state
+    Meteor.call("debts.insert", debtors, items)
+
     this.setState({
       debtors: [],
       items: [{ name: "", price: "" }]
