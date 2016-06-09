@@ -1,12 +1,12 @@
 DollaCop
 ========
 
-*Vazco.eu Bootcamp 3*: **Task 1**
+*Vazco.eu Bootcamp 3*: **Task 1+2**
 
 ## Setup
 
 ```shell
-git clone https://github.com/VazcoBootcamp3/group4.git . && cd $_
+git clone https://github.com/VazcoBootcamp3/group2.git . && cd $_
 git checkout mateusz-tunski && cd mateusz_tunski/dollacop
 npm install
 npm run start
