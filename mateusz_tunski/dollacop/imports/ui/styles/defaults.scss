@@ -1,0 +1,21 @@
+html {
+  @include typi-base();
+}
+
+body {
+  font-family: $default-font-family;
+  color: $default-font-color;
+  background: $default-background-color;
+}
+
+a {
+  text-decoration: none;
+
+  &:active, &:visited {
+    color: inherit;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

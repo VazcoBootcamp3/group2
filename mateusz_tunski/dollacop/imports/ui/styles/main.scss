@@ -1,3 +1,14 @@
-@import "{httpstr:normalize.scss}/normalize";
+@import "{}/node_modules/normalize-scss/sass/_normalize";
+@include normalize()
+@import "{}/node_modules/typi/scss/typi";
 
+@import url(//fonts.googleapis.com/css?family=Lato:100,400,700);
+
+@import "variables";
+@import "defaults";
+@import "typography";
 @import "layout";
+@import "utilities";
+
+@import "components/app-navigation";
+@import "components/app-header";

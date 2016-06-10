@@ -142,7 +142,7 @@ export default class DebtForm extends Component {
   render() {
     return (
       <div>
-        <h1>New debt</h1>
+        <h2 className="h1">New debt</h2>
         {this.renderForm()}
       </div>
     )

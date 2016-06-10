@@ -1,0 +1,58 @@
+.app-navigation {
+  &__links {
+    list-style: none;
+    text-align: right;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__link {
+    display: inline-block;
+
+    &:not(:last-child) {
+      margin-right: .5rem;
+
+      &:after {
+        margin-left: .5rem;
+        content: "|"
+      }
+    }
+
+    &--active {
+      font-weight: bold;
+      cursor: default;
+      pointer-events: none;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &__home-link {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &__logo {
+    height: 3rem;
+    vertical-align: middle;
+  }
+
+  &__title {
+    display: inline;
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding-left: .3rem;
+    vertical-align: middle;
+  }
+
+  &__subtitle {
+    margin-left: 1rem;
+
+    &:before {
+      content: "—";
+    }
+  }
+}

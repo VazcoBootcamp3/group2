@@ -14,8 +14,8 @@ export default class ReceivablesPage extends Component {
   render() {
     return (
       <div>
-        <h1>Your receivables</h1>
-        <h2>Summary</h2>
+        <h2 className="h1">Your receivables</h2>
+        <h3 className="h2">Summary</h3>
         <SummariesList
           summaries={this.props.summaries}
         />

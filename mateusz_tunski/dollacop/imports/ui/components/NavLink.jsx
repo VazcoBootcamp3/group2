@@ -4,7 +4,7 @@ import { Link } from "react-router"
 export default class NavLink extends Component {
   render() {
     return (
-      <Link {...this.props} activeClassName="active" />
+      <Link {...this.props} activeClassName="app-navigation__link--active" />
     )
   }
 }

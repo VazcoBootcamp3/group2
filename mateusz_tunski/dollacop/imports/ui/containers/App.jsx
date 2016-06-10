@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from "react"
 import { createContainer } from "meteor/react-meteor-data"
 import { Meteor } from "meteor/meteor"
 
-import Navigation from "../components/Navigation"
-import AccountsUIWrapper from "../components/AccountsUIWrapper.jsx"
+import AppHeader from "../components/AppHeader"
 
+import "flexboxgrid/css/flexboxgrid.css"
 import "../styles/main.scss"
 
 class App extends Component {
@@ -17,25 +17,13 @@ class App extends Component {
     currentUser: { _id: null, name: "" }
   }
 
-  renderLoggedInItems() {
+  render() {
     const { children, currentUser } = this.props
 
-    if (currentUser._id) {
-      return (
-        <div>
-          <Navigation />
-          {children && React.cloneElement(children, { currentUser })}
-        </div>
-      )
-    }
-    return null
-  }
-
-  render() {
     return (
       <div>
-        <AccountsUIWrapper />
-        {this.renderLoggedInItems()}
+        <AppHeader />
+        {currentUser._id && children && React.cloneElement(children, { currentUser })}
       </div>
     )
   }

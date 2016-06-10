@@ -6,12 +6,15 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "flexboxgrid": "^6.3.0",
     "lodash": "^4.13.1",
+    "normalize-scss": "^5.0.3",
     "react": "^15.1.0",
     "react-addons-pure-render-mixin": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-hot-loader": "^3.0.0-beta.2",
-    "react-router": "^2.4.1"
+    "react-router": "^2.4.1",
+    "typi": "^2.2.3"
   },
   "devDependencies": {
     "babel-eslint": "^6.0.4",
