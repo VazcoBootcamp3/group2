@@ -9,7 +9,7 @@ render(<AppContainer>{Router}</AppContainer>, document.querySelector("#app"))
 
 if (module.hot) {
   module.hot.accept("./Router", () => {
-    const NextAppRoot = require('./Router').default
+    const NextAppRoot = require("./Router").default
 
     render(<AppContainer>{NextAppRoot}</AppContainer>, document.querySelector("#app"))
   })

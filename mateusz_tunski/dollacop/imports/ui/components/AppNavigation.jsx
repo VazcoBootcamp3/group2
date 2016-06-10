@@ -1,11 +1,22 @@
-import React, { Component } from "react"
-import { Link } from "react-router"
+import React, { Component, PropTypes } from "react"
+import { Link, withRouter } from "react-router"
+import { Meteor } from "meteor/meteor"
 
-import AccountsUIWrapper from "../components/AccountsUIWrapper.jsx"
 import NavLink from "./NavLink"
 
+@withRouter
 export default class AppNavigation extends Component {
+  static propTypes = {
+    currentUser: PropTypes.object,
+    router: PropTypes.object
+  }
+
+  handleClick = () => {
+    Meteor.logout(() => this.props.router.push("/"))
+  }
+
   render() {
+    const { currentUser } = this.props
     return (
       <div className="row bottom-xs app-navigation">
         <div className="col-xs-6 gutterless">
@@ -16,7 +27,7 @@ export default class AppNavigation extends Component {
             </Link>
           </div>
           <div className="container">
-            <span className="app-navigation__subtitle">Keep your dolla' straight!</span>
+            <span className="app-navigation__subtitle">Keep your dolla" straight!</span>
           </div>
         </div>
         <nav className="col-xs-6 gutterless">
@@ -25,7 +36,9 @@ export default class AppNavigation extends Component {
             <li className="app-navigation__link"><NavLink to="/debts/new">New debt</NavLink></li>
             <li className="app-navigation__link"><NavLink to="/debts" onlyActiveOnIndex>Your debts</NavLink></li>
             <li className="app-navigation__link"><NavLink to="/receivables">Your receivables</NavLink></li>
-            <li className="app-navigation__link"><AccountsUIWrapper /></li>
+            {currentUser._id && <li className="app-navigation__link"><button onClick={this.handleClick}>Log out</button></li>}
+            {!currentUser._id && <li className="app-navigation__link"><NavLink to="/login">Sign in</NavLink></li>}
+            {!currentUser._id && <li className="app-navigation__link"><NavLink to="/signup">Sign up</NavLink></li>}
           </ul>
         </nav>
       </div>

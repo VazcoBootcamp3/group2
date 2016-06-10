@@ -3,7 +3,7 @@ import { createContainer } from "meteor/react-meteor-data"
 import { Meteor } from "meteor/meteor"
 
 import { Debts } from "/imports/api/Debts"
-import "/imports/api/userData"
+import "/imports/api/Users"
 
 class DebtsContainer extends Component {
   static propTypes = {
@@ -29,7 +29,7 @@ class DebtsContainer extends Component {
 
 export default createContainer((props) => {
   Meteor.subscribe("debts")
-  Meteor.subscribe("userData")
+  Meteor.subscribe("users")
   const { currentUser } = props
 
   return ({

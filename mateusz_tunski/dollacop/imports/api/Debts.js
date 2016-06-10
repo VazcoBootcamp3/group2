@@ -35,7 +35,14 @@ Meteor.methods({
 })
 
 if (Meteor.isServer) {
-  Meteor.publish("debts", () => Debts.find())
+  Meteor.publish("debts", function debtsPublication() {
+    if (!this.userId) {
+      throw new Meteor.Error("unauthorized")
+    }
+
+    return Debts.find()
+  })
+
 
   Meteor.methods({
     "debts.summary"() {

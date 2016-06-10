@@ -11,7 +11,7 @@ body {
 a {
   text-decoration: none;
 
-  &:active, &:visited {
+  &, &:active, &:visited {
     color: inherit;
   }
 

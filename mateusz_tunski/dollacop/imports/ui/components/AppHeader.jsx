@@ -6,7 +6,7 @@ export default class AppHeader extends Component {
   render() {
     return (
       <header className="app-header">
-        <AppNavigation />
+        <AppNavigation {...this.props} />
       </header>
     )
   }

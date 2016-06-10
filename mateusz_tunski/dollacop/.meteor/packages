@@ -13,10 +13,10 @@ standard-minifier-js    # JS minifier run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 
 static-html
-accounts-ui
 accounts-password
 react-meteor-data
 meteorhacks:aggregate
 seba:minifiers-autoprefixer
 fourseven:scss
 gadicc:ecmascript-hot@2.0.0-beta.4
+accounts-base
