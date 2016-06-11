@@ -19,7 +19,10 @@ export default class DebtsListItem extends Component {
 
     if (currentUser._id === creditor._id) {
       return (
-        <button onClick={this.handleClick}>
+        <button
+          className="button"
+          onClick={this.handleClick}
+        >
           Settle
         </button>
       )

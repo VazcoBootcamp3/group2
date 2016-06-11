@@ -19,7 +19,7 @@
     }
 
     &--active {
-      font-weight: bold;
+      font-weight: 700;
       cursor: default;
       pointer-events: none;
 
@@ -36,14 +36,17 @@
   }
 
   &__logo {
+    display: inline-block;
     height: 3rem;
+    width: 3rem;
     vertical-align: middle;
+    fill: white;
   }
 
   &__title {
     display: inline;
     font-size: 2.5rem;
-    font-weight: bold;
+    font-weight: 700;
     padding-left: .3rem;
     vertical-align: middle;
   }

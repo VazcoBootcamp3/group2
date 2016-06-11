@@ -1,8 +1,5 @@
-.app {
-  margin: auto;
-  max-width: $page-max-width;
+.app {}
 
-  @media screen and (max-width: $page-max-width) {
-    padding: 0 1rem;
-  }
+.container {
+  margin: auto;
 }

@@ -90,6 +90,7 @@ export default class DebtForm extends Component {
               />
               <button
                 type="button"
+                className="button"
                 disabled={items.length === 1}
                 onClick={() => { this.removeItem(index) }}
               >
@@ -99,6 +100,7 @@ export default class DebtForm extends Component {
           ))
         }
         <button
+          className="button"
           type="button"
           onClick={this.addItem}
         >
@@ -134,14 +136,19 @@ export default class DebtForm extends Component {
       <form onSubmit={this.handleSubmit}>
         {this.renderItemsFields()}
         {this.renderDebtorsFields()}
-        <button disabled={this.state.debtors.length === 0}>Submit</button>
+        <button
+          className="button"
+          disabled={this.state.debtors.length === 0}
+        >
+          Submit
+        </button>
       </form>
     )
   }
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h2 className="h1">New debt</h2>
         {this.renderForm()}
       </div>

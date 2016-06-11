@@ -54,7 +54,7 @@ export default class SignupForm extends Component {
           required
           onChange={this.handlePasswordChange}
         />
-        <button>Sign up</button>
+        <button className="button">Sign up</button>
       </form>
     )
   }

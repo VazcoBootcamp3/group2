@@ -10,7 +10,7 @@ export default class DebtsPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h2 className="h1">Your debts</h2>
         <DebtsList {...this.props} />
       </div>

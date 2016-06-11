@@ -23,7 +23,9 @@ class App extends Component {
     return (
       <div>
         <AppHeader currentUser={currentUser} />
-        {children && React.cloneElement(children, { currentUser })}
+        <section className="app-content">
+          {children && React.cloneElement(children, { currentUser })}
+        </section>
       </div>
     )
   }

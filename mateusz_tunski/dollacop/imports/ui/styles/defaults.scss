@@ -4,8 +4,9 @@ html {
 
 body {
   font-family: $default-font-family;
-  color: $default-font-color;
-  background: $default-background-color;
+  font-weight: $default-font-weight;
+  color: $default-color;
+  background: white;
 }
 
 a {
@@ -17,5 +18,34 @@ a {
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+button, .button {
+  background: transparent;
+  font-weight: 400;
+  color: inherit;
+  border: .15rem solid currentColor;
+  padding: .3rem 1rem;
+
+  &:hover {
+    cursor: pointer;
+    background: initial;
+  }
+
+  &--pill {
+    border-radius: 1rem;
+  }
+}
+
+input {
+  background: transparent;
+  color: inherit;
+  border: none;
+  border-bottom: .15rem solid currentColor;
+  padding: .3rem 0;
+
+  &:hover {
+    background: initial;
   }
 }

@@ -13,7 +13,7 @@ export default class ReceivablesPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h2 className="h1">Your receivables</h2>
         <h3 className="h2">Summary</h3>
         <SummariesList

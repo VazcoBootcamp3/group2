@@ -5,7 +5,8 @@ import { withRouter } from "react-router"
 @withRouter
 export default class LoginForm extends Component {
   static propTypes = {
-    router: PropTypes.object
+    router: PropTypes.object,
+    location: PropTypes.object
   }
 
   constructor(props) {
@@ -25,7 +26,13 @@ export default class LoginForm extends Component {
       if (error) {
         alert("Invalid credentials.") // Bleh, alert.
       } else {
-        this.props.router.push("/debts")
+        const { location } = this.props
+
+        if (location.state && location.state.nextPathname) {
+          this.props.router.replace(location.state.nextPathname)
+        } else {
+          this.props.router.replace("/")
+        }
       }
     })
   }
@@ -53,7 +60,7 @@ export default class LoginForm extends Component {
           required
           onChange={this.handlePasswordChange}
         />
-        <button>Log in</button>
+        <button className="button">Log into DollaCop</button>
       </form>
     )
   }
