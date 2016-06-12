@@ -9,7 +9,7 @@ export default class DebtsPage extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="wrap">
         <h2 className="h1">Your debts</h2>
         <DebtsList {...this.props} />
       </div>

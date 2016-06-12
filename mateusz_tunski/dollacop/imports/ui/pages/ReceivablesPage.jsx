@@ -15,7 +15,7 @@ export default class ReceivablesPage extends Component {
     const { receivables: debts, ...other } = this.props
 
     return (
-      <div className="container">
+      <div className="wrap">
         <div className="row">
           <div className="col-xs-8">
             <h2 className="h1">Your receivables</h2>

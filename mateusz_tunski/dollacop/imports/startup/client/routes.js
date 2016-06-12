@@ -5,6 +5,7 @@ import DebtsContainer from "/imports/ui/containers/DebtsContainer"
 import DebtFormContainer from "/imports/ui/containers/DebtFormContainer"
 import ReceivablesContainer from "/imports/ui/containers/ReceivablesContainer"
 
+import LandingPage from "/imports/ui/pages/LandingPage"
 import LoginPage from "/imports/ui/pages/LoginPage"
 import SignupPage from "/imports/ui/pages/SignupPage"
 
@@ -17,20 +18,40 @@ const authenticate = (nextState, replace) => {
   }
 }
 
+const indexRedirect = (_, replace) => {
+  if (Meteor.userId()) {
+    replace("/debts")
+  }
+}
+
 export default {
   path: "/",
   component: App,
-  indexRoute: { onEnter: (_, replace) => replace("/debts") },
+  indexRoute: {
+    component: LandingPage,
+    onEnter: indexRedirect
+  },
   childRoutes: [
-    { path: "login", component: LoginPage },
-    { path: "signup", component: SignupPage },
     {
-      path: "debts", onEnter: authenticate,
-      indexRoute: { component: DebtsContainer },
-      childRoutes: [
-        { path: "new", component: DebtFormContainer }
-      ]
+      path: "login",
+      component: LoginPage
     },
-    { path: "receivables", component: ReceivablesContainer, onEnter: authenticate },
+    {
+      path: "signup",
+      component: SignupPage
+    },
+    {
+      path: "debts",
+      indexRoute: { component: DebtsContainer },
+      childRoutes: [{
+        path: "new", component: DebtFormContainer
+      }],
+      onEnter: authenticate
+    },
+    {
+      path: "receivables",
+      component: ReceivablesContainer,
+      onEnter: authenticate
+    }
   ]
 }

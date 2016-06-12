@@ -1,5 +1,5 @@
-.app {}
-
-.container {
+.wrap {
+  padding: $app-padding;
+  max-width: $max-page-width;
   margin: auto;
 }
