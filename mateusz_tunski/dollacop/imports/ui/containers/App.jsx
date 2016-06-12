@@ -1,36 +1,33 @@
 import React, { Component, PropTypes } from "react"
-import { createContainer } from "meteor/react-meteor-data"
 import { Meteor } from "meteor/meteor"
+import TrackerReact from "meteor/ultimatejs:tracker-react"
 
 import AppHeader from "../components/AppHeader"
 
 import "flexboxgrid/css/flexboxgrid.css"
 import "../styles/main.scss"
 
-class App extends Component {
+@TrackerReact
+export default class App extends Component {
   static propTypes = {
-    children: PropTypes.object.isRequired,
-    currentUser: PropTypes.object
+    children: PropTypes.object.isRequired
   }
 
-  static defaultProps = {
-    currentUser: { _id: null, name: "" }
+  meteorData() {
+    return { currentUser: Meteor.user() || { _id: null, name: "" } }
   }
 
   render() {
-    const { children, currentUser } = this.props
+    const { children } = this.props
+    const currentUser = this.meteorData()
 
     return (
       <div>
-        <AppHeader currentUser={currentUser} />
+        <AppHeader {...currentUser} />
         <section className="app-content">
-          {children && React.cloneElement(children, { currentUser })}
+          {React.cloneElement(children, currentUser)}
         </section>
       </div>
     )
   }
 }
-
-export default createContainer((props) => ({
-  currentUser: Meteor.user() || props.currentUser
-}), App)

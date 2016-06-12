@@ -26,12 +26,12 @@ export default class LoginForm extends Component {
       if (error) {
         alert("Invalid credentials.") // Bleh, alert.
       } else {
-        const { location } = this.props
+        const { router, location } = this.props
 
         if (location.state && location.state.nextPathname) {
-          this.props.router.replace(location.state.nextPathname)
+          router.replace(location.state.nextPathname)
         } else {
-          this.props.router.replace("/")
+          router.replace("/")
         }
       }
     })

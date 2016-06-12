@@ -62,7 +62,6 @@ package-version-parser@3.0.9-rc.4
 promise@0.7.2-rc.4
 random@1.0.9
 rate-limit@1.0.5-rc.4
-react-meteor-data@0.2.9
 reactive-var@1.0.10-rc.4
 reload@1.1.9-rc.4
 retry@1.0.8-rc.4
@@ -78,9 +77,9 @@ srp@1.0.9-rc.4
 standard-minifier-js@1.0.7-rc.4
 static-html@1.0.8-rc.4
 templating-tools@1.0.4
-tmeasday:check-npm-versions@0.2.0
 tracker@1.0.14-rc.4
 ui@1.0.11
+ultimatejs:tracker-react@1.0.5
 underscore@1.0.9-rc.4
 url@1.0.10-rc.4
 webapp@1.2.8

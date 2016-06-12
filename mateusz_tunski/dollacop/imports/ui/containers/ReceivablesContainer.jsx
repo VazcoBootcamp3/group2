@@ -1,21 +1,32 @@
-import React, { Component } from "react"
+import React, { Component, PropTypes } from "react"
 import { Meteor } from "meteor/meteor"
-import { createContainer } from "meteor/react-meteor-data"
+import TrackerReact from "meteor/ultimatejs:tracker-react"
 
 import { Debts } from "/imports/api/Debts"
 
 import ReceivablesPage from "../pages/ReceivablesPage"
 
-class ReceivablesContainer extends Component {
-  static defaultProps = {
-    receivables: []
+@TrackerReact
+export default class ReceivablesContainer extends Component {
+  static propTypes = {
+    currentUser: PropTypes.object
   }
 
   constructor(props) {
     super(props)
 
-    this.state = { summaries: [] }
+    this.state = {
+      summaries: [],
+      subscription: {
+        receivables: Meteor.subscribe("debts")
+      }
+    }
+
     this.updateSummaries()
+  }
+
+  componentWillUnmount() {
+    this.state.subscription.receivables.stop()
   }
 
   settleDebt = (debtId) => {
@@ -27,26 +38,30 @@ class ReceivablesContainer extends Component {
     Meteor.call("debts.summary", (_, summaries) => this.setState({ summaries }))
   }
 
+  meteorData() {
+    const { currentUser } = this.props
+
+    return ({
+      receivables: Debts.find({
+        "creditor._id": currentUser._id,
+        settled: false
+      }, { sort: { createdAt: -1 } }).fetch()
+    })
+  }
+
   render() {
+    const { currentUser } = this.props
+    const { summaries } = this.state
+
     return (
       <div>
         <ReceivablesPage
-          {...this.props}
-          summaries={this.state.summaries}
+          currentUser={currentUser}
+          summaries={summaries}
           settleDebt={this.settleDebt}
+          {...this.meteorData()}
         />
       </div>
     )
   }
 }
-
-export default createContainer((props) => {
-  Meteor.subscribe("debts")
-
-  return ({
-    receivables: Debts.find({
-      "creditor._id": props.currentUser._id,
-      settled: false
-    }, { sort: { createdAt: -1 } }).fetch()
-  })
-}, ReceivablesContainer)
