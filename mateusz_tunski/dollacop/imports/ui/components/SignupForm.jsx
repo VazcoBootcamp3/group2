@@ -8,13 +8,9 @@ export default class SignupForm extends Component {
     router: PropTypes.object
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      email: "",
-      password: ""
-    }
+  state = {
+    email: "",
+    password: ""
   }
 
   handleSubmit = (ev) => {

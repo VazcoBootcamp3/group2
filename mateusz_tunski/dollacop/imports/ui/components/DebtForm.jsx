@@ -7,13 +7,9 @@ export default class DebtForm extends Component {
     users: PropTypes.arrayOf(PropTypes.object)
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      debtors: [],
-      items: [{ name: "", price: "" }]
-    }
+  state = {
+    debtors: [],
+    items: [{ name: "", price: "" }]
   }
 
   handleSubmit = (ev) => {

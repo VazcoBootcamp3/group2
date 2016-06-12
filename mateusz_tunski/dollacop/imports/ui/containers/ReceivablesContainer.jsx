@@ -12,14 +12,10 @@ export default class ReceivablesContainer extends Component {
     currentUser: PropTypes.object
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      subscription: {
-        receivables: Meteor.subscribe("receivables"),
-        debtsSummary: Meteor.subscribe("debtsSummary")
-      }
+  state = {
+    subscription: {
+      receivables: Meteor.subscribe("receivables"),
+      debtsSummary: Meteor.subscribe("debtsSummary")
     }
   }
 

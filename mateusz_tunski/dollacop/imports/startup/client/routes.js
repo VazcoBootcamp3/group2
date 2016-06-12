@@ -2,10 +2,8 @@ import { Meteor } from "meteor/meteor"
 
 import App from "/imports/ui/containers/App"
 import DebtsContainer from "/imports/ui/containers/DebtsContainer"
+import DebtFormContainer from "/imports/ui/containers/DebtFormContainer"
 import ReceivablesContainer from "/imports/ui/containers/ReceivablesContainer"
-
-import DebtsPage from "/imports/ui/pages/DebtsPage"
-import DebtForm from "/imports/ui/components/DebtForm"
 
 import LoginPage from "/imports/ui/pages/LoginPage"
 import SignupPage from "/imports/ui/pages/SignupPage"
@@ -27,10 +25,10 @@ export default {
     { path: "login", component: LoginPage },
     { path: "signup", component: SignupPage },
     {
-      path: "debts", component: DebtsContainer, onEnter: authenticate,
-      indexRoute: { component: DebtsPage },
+      path: "debts", onEnter: authenticate,
+      indexRoute: { component: DebtsContainer },
       childRoutes: [
-        { path: "new", component: DebtForm }
+        { path: "new", component: DebtFormContainer }
       ]
     },
     { path: "receivables", component: ReceivablesContainer, onEnter: authenticate },

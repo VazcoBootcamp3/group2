@@ -2,29 +2,31 @@ import React, { Component, PropTypes } from "react"
 import { Meteor } from "meteor/meteor"
 import TrackerReact from "meteor/ultimatejs:tracker-react"
 
-import DebtsPage from "/imports/ui/pages/DebtsPage"
+import DebtForm from "../components/DebtForm"
 
-import { Debts } from "/imports/api/Debts"
+import "/imports/api/Users"
 
 @TrackerReact
-export default class DebtsContainer extends Component {
+export default class DebtsFormContainer extends Component {
   static propTypes = {
     currentUser: PropTypes.object
   }
 
   state = {
     subscription: {
-      debts: Meteor.subscribe("debts")
+      users: Meteor.subscribe("users")
     }
   }
 
   componentWillUnmount() {
-    this.state.subscription.debts.stop()
+    this.state.subscription.users.stop()
   }
 
   meteorData() {
+    const { currentUser } = this.props
+
     return {
-      debts: Debts.find().fetch()
+      users: Meteor.users.find({ _id: { $ne: currentUser._id } }).fetch()
     }
   }
 
@@ -32,7 +34,7 @@ export default class DebtsContainer extends Component {
     const { currentUser } = this.props
 
     return (
-      <DebtsPage currentUser={currentUser} {...this.meteorData()} />
+      <DebtForm {...this.meteorData()} />
     )
   }
 }

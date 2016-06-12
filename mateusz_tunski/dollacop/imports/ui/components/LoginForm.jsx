@@ -9,13 +9,9 @@ export default class LoginForm extends Component {
     location: PropTypes.object
   }
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      email: "",
-      password: ""
-    }
+  state = {
+    email: "",
+    password: ""
   }
 
   handleSubmit = (ev) => {

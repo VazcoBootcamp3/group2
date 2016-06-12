@@ -4,7 +4,6 @@ import DebtsList from "../components/DebtsList"
 
 export default class DebtsPage extends Component {
   static propTypes = {
-    currentUser: PropTypes.object,
     debts: PropTypes.arrayOf(PropTypes.object)
   }
 

@@ -12,18 +12,25 @@ export default class ReceivablesPage extends Component {
   }
 
   render() {
+    const { receivables: debts, ...other } = this.props
+
     return (
       <div className="container">
-        <h2 className="h1">Your receivables</h2>
-        <h3 className="h2">Summary</h3>
-        <DebtsSummary
-          summary={this.props.debtsSummary}
-        />
-        <DebtsList
-          currentUser={this.props.currentUser}
-          debts={this.props.receivables}
-          settleDebt={this.props.settleDebt}
-        />
+        <div className="row">
+          <div className="col-xs-8">
+            <h2 className="h1">Your receivables</h2>
+            <DebtsList
+              debts={debts}
+              {...other}
+            />
+          </div>
+          <div className="col-xs-4">
+            <h3 className="h1">Summary</h3>
+            <DebtsSummary
+              summary={this.props.debtsSummary}
+            />
+          </div>
+        </div>
       </div>
     )
   }
