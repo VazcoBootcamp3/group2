@@ -37,23 +37,46 @@ export default class DebtsListItem extends Component {
       )
     )
   }
-  renderDebtors() {
-    const { debtors } = this.props
 
-    return (
-      debtors.map((debtor, index) => {
-        const affix = (debtors.length === index + 1 ? "" : ", ")
-        return (`${debtor.name}${affix}`)
-      })
-    )
+  renderCreditor() {
+    const { currentUser, creditor } = this.props
+
+    if (currentUser._id !== creditor._id) {
+      return (
+        <div>
+          Creditor:
+          {creditor.name}
+        </div>
+      )
+    }
+    return null
+  }
+
+  renderDebtors() {
+    const { currentUser, creditor, debtors } = this.props
+
+    if (currentUser._id === creditor._id) {
+      return (
+        <div>
+          Debtors:
+          {
+            debtors.map((debtor, index) => {
+              const affix = (debtors.length === index + 1 ? "" : ", ")
+              return (`${debtor.name}${affix}`)
+            })
+          }
+        </div>
+      )
+    }
+    return null
   }
 
   render() {
     return (
       <div>
-        <p>Creditor: {this.props.creditor.name}</p>
-        <ul>{this.renderItems()}</ul>
-        <p>Debtors: {this.renderDebtors()}</p>
+        {this.renderCreditor()}
+        {this.renderDebtors()}
+        {this.renderItems()}
         {this.rednderSettle()}
       </div>
     )

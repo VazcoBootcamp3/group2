@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from "react"
 
-import SummariesList from "../components/SummariesList"
+import DebtsSummary from "../components/DebtsSummary"
 import DebtsList from "../components/DebtsList"
 
 export default class ReceivablesPage extends Component {
   static propTypes = {
     currentUser: PropTypes.object,
     receivables: PropTypes.arrayOf(PropTypes.object),
-    summaries: PropTypes.arrayOf(PropTypes.object),
+    debtsSummary: PropTypes.arrayOf(PropTypes.object),
     settleDebt: PropTypes.func
   }
 
@@ -16,10 +16,9 @@ export default class ReceivablesPage extends Component {
       <div className="container">
         <h2 className="h1">Your receivables</h2>
         <h3 className="h2">Summary</h3>
-        <SummariesList
-          summaries={this.props.summaries}
+        <DebtsSummary
+          summary={this.props.debtsSummary}
         />
-        <hr />
         <DebtsList
           currentUser={this.props.currentUser}
           debts={this.props.receivables}

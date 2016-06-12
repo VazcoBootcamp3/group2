@@ -1,8 +1,12 @@
 import { Meteor } from "meteor/meteor"
 import { Mongo } from "meteor/mongo"
 import { check } from 'meteor/check'
+import { ReactiveAggregate } from "meteor/jcbernack:reactive-aggregate"
 
-export const Debts = new Mongo.Collection("debts")
+const Debts = new Mongo.Collection("debts")
+const DebtsSummary = new Mongo.Collection("debtsSummary")
+
+export { Debts, DebtsSummary }
 
 Meteor.methods({
   "debts.insert"(debtors, items) {
@@ -40,30 +44,38 @@ if (Meteor.isServer) {
       throw new Meteor.Error("unauthorized")
     }
 
-    return Debts.find()
+    return Debts.find({ "debtors._id": this.userId, settled: false })
   })
 
-
-  Meteor.methods({
-    "debts.summary"() {
-      if (!this.userId) {
-        throw new Meteor.Error("unauthorized")
-      }
-
-      return (
-        Debts.aggregate([
-          { $match: { "creditor._id": this.userId, settled: false } },
-          { $unwind: "$items" },
-          { $unwind: "$debtors" },
-          { $group: {
-            _id: "$debtors._id",
-            debtor: { $last: "$debtors" },
-            total: { $sum: "$items.price" }
-          } },
-          { $project: { _id: 0, debtor: "$debtor", total: "$total" } },
-          { $sort: { total: - 1 } }
-        ])
-      )
+  Meteor.publish("receivables", function receivablesPublication() {
+    if (!this.userId) {
+      throw new Meteor.Error("unauthorized")
     }
+
+    return (
+      Debts.find(
+        { "creditor._id": this.userId, settled: false },
+        { sort: { createdAt: -1 } }
+      )
+    )
+  })
+
+  Meteor.publish("debtsSummary", function debtsSummaryPublication() {
+    if (!this.userId) {
+      throw new Meteor.Error("unauthorized")
+    }
+
+    ReactiveAggregate(this, Debts, [
+      { $match: { "creditor._id": this.userId, settled: false } },
+      { $unwind: "$items" },
+      { $unwind: "$debtors" },
+      { $group: {
+        _id: "$debtors._id",
+        debtor: { $last: "$debtors" },
+        total: { $sum: "$items.price" }
+      } },
+      { $project: { _id: 1, debtor: "$debtor", total: "$total" } },
+      { $sort: { total: - 1 } }
+    ], { clientCollection: "debtsSummary" })
   })
 }

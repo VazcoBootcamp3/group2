@@ -32,8 +32,8 @@ export default class DebtsContainer extends Component {
     const { currentUser } = this.props
 
     return {
-      users: Meteor.users.find({ _id: { $not: currentUser._id } }).fetch(),
-      debts: Debts.find({ "debtors._id": currentUser._id, settled: false }).fetch()
+      users: Meteor.users.find({ _id: { $ne: currentUser._id } }).fetch(),
+      debts: Debts.find().fetch()
     }
   }
 
@@ -41,9 +41,7 @@ export default class DebtsContainer extends Component {
     const { children, currentUser } = this.props
 
     return (
-      <div>
-        {React.cloneElement(children, { currentUser, ...this.meteorData() })}
-      </div>
+      React.cloneElement(children, { currentUser, ...this.meteorData() })
     )
   }
 }
