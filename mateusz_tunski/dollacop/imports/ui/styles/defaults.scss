@@ -22,6 +22,7 @@ a {
 }
 
 button, .button {
+  display: inline-block;
   background: transparent;
   font-weight: 400;
   color: inherit;
@@ -31,6 +32,7 @@ button, .button {
   &:hover {
     cursor: pointer;
     background: initial;
+    text-decoration: none;
   }
 
   &--pill {

@@ -73,11 +73,15 @@ export default class DebtsListItem extends Component {
 
   render() {
     return (
-      <div>
-        {this.renderCreditor()}
-        {this.renderDebtors()}
-        {this.renderItems()}
-        {this.rednderSettle()}
+      <div className="row debts__item">
+        <div className="col-xs-10">
+          {this.renderCreditor()}
+          {this.renderDebtors()}
+          {this.renderItems()}
+        </div>
+        <div className="col-xs-2">
+          {this.rednderSettle()}
+        </div>
       </div>
     )
   }

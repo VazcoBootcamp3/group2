@@ -10,19 +10,18 @@ export default class DebtsList extends Component {
   renderDebts() {
     return (
       this.props.debts.map(debt =>
-        <div key={debt._id}>
-          <DebtsListItem
-            {...this.props}
-            {...debt}
-          />
-        </div>
+        <DebtsListItem
+          {...this.props}
+          {...debt}
+          key={debt._id}
+        />
       )
     )
   }
 
   render() {
     return (
-      <div>
+      <div className="col-xs-12">
         {this.renderDebts()}
       </div>
     )
