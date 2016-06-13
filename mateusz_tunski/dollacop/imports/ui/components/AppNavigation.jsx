@@ -35,6 +35,7 @@ export default class AppNavigation extends Component {
           <ul className="app-navigation__links">
             <li className="app-navigation__link"><AppNavigationLink to="/debts" onlyActiveOnIndex>Your debts</AppNavigationLink></li>
             <li className="app-navigation__link"><AppNavigationLink to="/receivables">Your receivables</AppNavigationLink></li>
+            <li className="app-navigation__link"><AppNavigationLink to="/groups">Your groups</AppNavigationLink></li>
             {currentUser._id && <li className="app-navigation__link"><button className="button button--pill" onClick={this.handleClick}>Log out</button></li>}
             {!currentUser._id && <li className="app-navigation__link"><Link className="button button--pill" to="/login">Log in</Link></li>}
           </ul>

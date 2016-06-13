@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from "react"
 import { Meteor } from "meteor/meteor"
 import TrackerReact from "meteor/ultimatejs:tracker-react"
 
-import DebtForm from "../components/DebtForm"
+import GroupForm from "../components/GroupForm"
 
 import "/imports/api/Users"
 
 @TrackerReact
-export default class DebtsFormContainer extends Component {
+export default class GroupFormContainer extends Component {
   static propTypes = {
     currentUser: PropTypes.object
   }
@@ -32,7 +32,7 @@ export default class DebtsFormContainer extends Component {
 
   render() {
     return (
-      <DebtForm {...this.meteorData()} />
+      <GroupForm {...this.meteorData()} />
     )
   }
 }

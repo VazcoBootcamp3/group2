@@ -4,6 +4,8 @@ import App from "/imports/ui/containers/App"
 import DebtsContainer from "/imports/ui/containers/DebtsContainer"
 import DebtFormContainer from "/imports/ui/containers/DebtFormContainer"
 import ReceivablesContainer from "/imports/ui/containers/ReceivablesContainer"
+import GroupsContainer from "/imports/ui/containers/GroupsContainer"
+import GroupFormContainer from "/imports/ui/containers/GroupFormContainer"
 
 import LandingPage from "/imports/ui/pages/LandingPage"
 import LoginPage from "/imports/ui/pages/LoginPage"
@@ -51,6 +53,14 @@ export default {
     {
       path: "receivables",
       component: ReceivablesContainer,
+      onEnter: authenticate
+    },
+    {
+      path: "groups",
+      indexRoute: { component: GroupsContainer },
+      childRoutes: [{
+        path: "new", component: GroupFormContainer
+      }],
       onEnter: authenticate
     }
   ]

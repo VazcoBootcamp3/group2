@@ -2,6 +2,7 @@ import { Meteor } from "meteor/meteor"
 import { Accounts } from "meteor/accounts-base"
 
 import { Debts } from "/imports/api/Debts"
+import { Groups } from "/imports/api/Groups"
 
 let index = 1
 do {
@@ -64,6 +65,17 @@ if (Debts.find().count() === 0) {
       { name: "testitem2", price: 150 }
     ],
     settled: false,
+    createdAt: Date.now()
+  })
+}
+
+if (Groups.find().count() === 0) {
+  Groups.insert({
+    name: "Group 1",
+    admin: { _id: users[0]._id, name: users[0].profile.name },
+    members: [
+      { _id: users[1]._id, name: users[1].profile.name },
+    ],
     createdAt: Date.now()
   })
 }
