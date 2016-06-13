@@ -1,0 +1,53 @@
+html {
+  @include typi-base();
+}
+
+body {
+  font-family: $default-font-family;
+  font-weight: $default-font-weight;
+  color: $default-color;
+  background: white;
+}
+
+a {
+  text-decoration: none;
+
+  &, &:active, &:visited {
+    color: inherit;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+button, .button {
+  display: inline-block;
+  background: transparent;
+  font-weight: 400;
+  color: inherit;
+  border: .15rem solid currentColor;
+  padding: .3rem 1rem;
+
+  &:hover {
+    cursor: pointer;
+    background: initial;
+    text-decoration: none;
+  }
+
+  &--pill {
+    border-radius: 1rem;
+  }
+}
+
+input {
+  background: transparent;
+  color: inherit;
+  border: none;
+  border-bottom: .15rem solid currentColor;
+  padding: .3rem 0;
+
+  &:hover {
+    background: initial;
+  }
+}
