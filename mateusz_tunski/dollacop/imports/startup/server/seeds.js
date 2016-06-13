@@ -74,7 +74,18 @@ if (Groups.find().count() === 0) {
     name: "Group 1",
     admin: { _id: users[0]._id, name: users[0].profile.name },
     members: [
-      { _id: users[1]._id, name: users[1].profile.name },
+      { _id: users[1]._id, name: users[1].profile.name, invitation: { state: "accepted" } },
+      { _id: users[2]._id, name: users[1].profile.name, invitation: { state: "pending" } }
+    ],
+    createdAt: Date.now()
+  })
+
+  Groups.insert({
+    name: "Group 2",
+    admin: { _id: users[1]._id, name: users[1].profile.name },
+    members: [
+      { _id: users[0]._id, name: users[0].profile.name, invitation: { state: "pending" } },
+      { _id: users[2]._id, name: users[2].profile.name, invitation: { state: "accepted" } }
     ],
     createdAt: Date.now()
   })

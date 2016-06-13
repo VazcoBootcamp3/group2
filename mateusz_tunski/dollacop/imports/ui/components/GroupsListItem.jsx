@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from "react"
+import _ from "lodash"
 
 export default class GroupsListItem extends Component {
   static propTypes = {
@@ -7,6 +8,53 @@ export default class GroupsListItem extends Component {
     admin: PropTypes.object,
     members: PropTypes.arrayOf(PropTypes.object),
     name: PropTypes.string,
+    removeGroup: PropTypes.func,
+    acceptInvitation: PropTypes.func,
+    leaveGroup: PropTypes.func
+  }
+
+  handleDeleteClick = () => {
+    this.props.removeGroup(this.props._id)
+  }
+
+  handleAcceptInvitationClick = () => {
+    this.props.acceptInvitation(this.props._id)
+  }
+
+  handleLeaveClick = () => {
+    this.props.leaveGroup(this.props._id)
+  }
+
+  renderActions() {
+    const { currentUser, admin } = this.props
+    const handlers = {
+      delete: { handler: this.handleDeleteClick, text: "Delete" },
+      accept: { handler: this.handleAcceptInvitationClick, text: "Accept" },
+      leave: { handler: this.handleLeaveClick, text: "Leave" }
+    }
+
+    let action = null
+    if (currentUser._id === admin._id) {
+      action = "delete"
+    } else {
+      const { members } = this.props
+      const { invitation } = _.find(members, { _id: currentUser._id })
+
+      if (invitation.state === "pending") {
+        action = "accept"
+      } else {
+        action = "leave"
+      }
+    }
+
+    return (
+      <button
+        className="button"
+        onClick={handlers[action].handler}
+      >
+        {handlers[action].text}
+      </button>
+    )
   }
 
   renderName() {
@@ -16,8 +64,8 @@ export default class GroupsListItem extends Component {
   }
 
   renderAdmin() {
-    const { currentUser, admin: { _id, name } } = this.props
-    const adminName = (currentUser._id === _id ? "You" : name)
+    const { currentUser, admin } = this.props
+    const adminName = (currentUser._id === admin._id ? "You" : admin.name)
 
     return <div>Admin: {adminName}</div>
   }
@@ -40,11 +88,14 @@ export default class GroupsListItem extends Component {
 
   render() {
     return (
-      <div className="row">
-        <div className="col-xs-12">
+      <div className="row groups__item">
+        <div className="col-xs-10">
           {this.renderName()}
           {this.renderAdmin()}
           {this.renderMembers()}
+        </div>
+        <div className="col-xs-2 text-right">
+          {this.renderActions()}
         </div>
       </div>
     )

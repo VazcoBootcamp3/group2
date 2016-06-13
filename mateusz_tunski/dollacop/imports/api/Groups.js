@@ -21,10 +21,46 @@ Meteor.methods({
       createdAt: Date.now()
     })
   },
+
+  "groups.remove"(groupId) {
+    check(groupId, String)
+
+    if (Groups.findOne(groupId).admin._id !== this.userId) {
+      throw new Meteor.Error("unauthorized")
+    }
+
+    Groups.remove({ _id: groupId })
+  },
+
+  "groups.acceptInvitation"(groupId) {
+    check(groupId, String)
+
+    if (!Groups.findOne({ _id: groupId, "members._id": this.userId })) {
+      throw new Meteor.Error("unauthorized")
+    }
+
+    Groups.update(
+      { _id: groupId, "members._id": this.userId },
+      { $set: { "members.$.invitation.state": "accepted" } }
+    )
+  },
+
+  "groups.leave"(groupId) {
+    check(groupId, String)
+
+    if (!Groups.findOne({ _id: groupId, "members._id": this.userId })) {
+      throw new Meteor.Error("unauthorized")
+    }
+
+    Groups.update(
+      { _id: groupId, "members._id": this.userId },
+      { $pull: { members: { _id: this.userId } } }
+    )
+  },
 })
 
 if (Meteor.isServer) {
-  Meteor.publish("groups", function debtsPublication() {
+  Meteor.publish("groups", function groupsPublication() {
     if (!this.userId) {
       throw new Meteor.Error("unauthorized")
     }

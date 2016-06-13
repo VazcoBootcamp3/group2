@@ -22,6 +22,18 @@ export default class GroupsContainer extends Component {
     this.state.subscription.groups.stop()
   }
 
+  removeGroup(groupId) {
+    Meteor.call("groups.remove", groupId)
+  }
+
+  acceptInvitation(groupId) {
+    Meteor.call("groups.acceptInvitation", groupId)
+  }
+
+  leaveGroup(groupId) {
+    Meteor.call("groups.leave", groupId)
+  }
+
   meteorData() {
     return {
       groups: Groups.find().fetch()
@@ -32,7 +44,13 @@ export default class GroupsContainer extends Component {
     const { currentUser } = this.props
 
     return (
-      <GroupsPage currentUser={currentUser} {...this.meteorData()} />
+      <GroupsPage
+        currentUser={currentUser}
+        {...this.meteorData()}
+        removeGroup={this.removeGroup}
+        acceptInvitation={this.acceptInvitation}
+        leaveGroup={this.leaveGroup}
+      />
     )
   }
 }

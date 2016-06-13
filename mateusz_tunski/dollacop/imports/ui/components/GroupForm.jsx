@@ -33,6 +33,7 @@ export default class GroupForm extends Component {
   handleMemberChange = (ev) => {
     const { members } = this.state
     const member = JSON.parse(ev.target.value)
+    member.invitation.state = "pending"
 
     if (ev.target.checked) {
       members.push(member)
