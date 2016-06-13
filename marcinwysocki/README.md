@@ -1,0 +1,2 @@
+# shopping-manager
+Meteor + React

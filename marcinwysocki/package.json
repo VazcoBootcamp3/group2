@@ -1,0 +1,13 @@
+{
+  "name": "shopping-manager",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "meteor-node-stubs": "~0.2.0",
+    "npm": "^3.9.5",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0"
+  }
+}
