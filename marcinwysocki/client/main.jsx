@@ -10,8 +10,7 @@ Meteor.startup(() => {
   Tracker.autorun(() => {
      let flatmatesSub = Meteor.subscribe("flatmates-coll");
      if (flatmatesSub.ready()) {
-       render(<Manager flatmates={Flatmates.find().fetch()} />, document.getElementById('app'));
+       render(<Manager flatmatesColl={Flatmates} />, document.getElementById('app'));
      }
-
   });
 })

@@ -10,10 +10,10 @@ export default class Manager extends React.Component {
     super(...args);
 
     this.state = {
-      flatmates: this.props.flatmates,
+      flatmates: [],
       products: {},
-      showReport: false,
-      activeTab: 'register'
+      currentUser: {},
+      activeTab: 'login'
     };
 
     this.handleClearing = this.handleClearing.bind(this);
@@ -22,28 +22,14 @@ export default class Manager extends React.Component {
     this.handleTabToggle = this.handleTabToggle.bind(this);
     this.renderContent = this.renderContent.bind(this);
     this.handleFlatmateRegistration = this.handleFlatmateRegistration.bind(this);
-    this.handleFlatmateLogin = this.handleFlatmateLogin.bind(this);
+    this.handleUserLogin = this.handleUserLogin.bind(this);
   }
 
   componentDidMount () {
-    let list = document.getElementById('nav-mobile').children;
-    if (!this.state.showReport) {
-      list[0].className = 'active';
-      list[1].className  = '';
-    } else {
-      list[0].className = 'active';
-      list[1].className  = '';
-    }
-  }
-
-  componentWillReceiveProps (nextProps) {
-    this.setState({
-      flatmates: nextProps.flatmates
-    });
+    this.handleTabToggle(this.state.activeTab);
   }
 
   updateflatmates(updatedflatmates) {
-    //localStorage['flatmates'] = JSON.stringify(updatedflatmates);
     this.setState({
       flatmates: updatedflatmates
     });
@@ -51,7 +37,18 @@ export default class Manager extends React.Component {
 
   handleTabToggle(tabID) {
     let list = document.getElementById('nav-mobile').children,
-        i = 0;
+        i = 0,
+        isLoggedIn = Object.keys(this.state.currentUser).length > 0;
+
+        console.log('keys',Object.keys(this.state.currentUser));
+
+
+    if (tabID === this.state.activeTab) {
+      return;
+    } else if (!isLoggedIn && tabID !== 'register' && tabID !== 'login') {
+      Materialize.toast('Please log in first!', 2000);
+      return;
+    }
 
     for (i; i < list.length; i++) {
       if (list[i].children[0].id === tabID) {
@@ -65,19 +62,17 @@ export default class Manager extends React.Component {
   }
 
   renderContent() {
-    console.log(this.state.activeTab);
 
+    //paskudny pseudo-routing
     switch (this.state.activeTab) {
       case 'shoppingForm':
         return <ShoppingForm flatmates={this.state.flatmates} calculate={this.calculateBills}/>
-        break;
       case 'report':
         return <Report flatmates={this.state.flatmates} clearing={this.handleClearing}/>
-        break;
       case 'register':
         return <Register register={this.handleFlatmateRegistration}/>
       case 'login':
-        return <Login login={this.handleFlatmateLogin}/>
+        return <Login login={this.handleUserLogin}/>
       default:
         return <Register/>
     }
@@ -100,17 +95,39 @@ export default class Manager extends React.Component {
     });
   }
 
-  handleFlatmateRegistration(login, password) {
-    Meteor.call("registration", login, password,
+  handleFlatmateRegistration(login, password, flat, onSuccess) {
+    Meteor.call("registration", login, password, flat,
       (err, res) => {
         if (err) {
           console.error(err);
+        } else {
+          if (typeof onSuccess !== 'undefined') {
+            onSuccess();
+          }
         }
       });
   }
 
-  handleFlatmateLogin(login, password) {
-    alert('zalogowano, ' + login);
+  handleUserLogin(login, password, onWrongPswd) {
+    let {flatmatesColl} = this.props,
+        user = flatmatesColl.findOne({name: login}),
+        flatmates = [];
+
+    if (user.password !== password) {
+      Materialize.toast('Wrong password!', 2000);
+      if (typeof onWrongPswd !== 'undefined'){
+        onWrongPswd();
+      }
+    } else {
+      flatmates = flatmatesColl.find({flat: user.flat}).fetch();
+
+      this.setState({
+        currentUser: user,
+        flatmates: flatmates
+      }, () => this.handleTabToggle('shoppingForm'));
+
+      //this.handleTabToggle('shoppingForm');
+    }
   }
 
   render() {
@@ -120,12 +137,12 @@ export default class Manager extends React.Component {
       <div className="row">
         <nav>
          <div className="nav-wrapper">
-            <h4 className="brand-logo left">Rozliczenia</h4>
+            <h4 className="brand-logo left">Shopping Manager</h4>
          <ul id="nav-mobile" className="right ">
-             <li><a href="#" id='shoppingForm' onClick={() => this.handleTabToggle('shoppingForm')}>Dodaj pozycję</a></li>
-             <li><a href="#" id='report' onClick={() => this.handleTabToggle('report')}>Pokaż raport</a></li>
-             <li><a href="#" id='register' onClick={() => this.handleTabToggle('register')}>Rejestracja</a></li>
-             <li><a href="#" id='login' onClick={() => this.handleTabToggle('login')}>Zaloguj</a></li>
+             <li><a href="#" id='shoppingForm' onClick={() => this.handleTabToggle('shoppingForm')}>Add products</a></li>
+             <li><a href="#" id='report' onClick={() => this.handleTabToggle('report')}>Show report</a></li>
+             <li><a href="#" id='register' onClick={() => this.handleTabToggle('register')}>Register</a></li>
+             <li><a href="#" id='login' onClick={() => this.handleTabToggle('login')}>Login</a></li>
            </ul>
          </div>
         </nav>

@@ -3,11 +3,11 @@ import {Meteor} from 'meteor/meteor'
 import Flatmates from '/imports/collections/Flatmates'
 
 Meteor.methods({
-  registration(login, password) {
+  registration(login, password, flat) {
     Flatmates.insert({
       "name": login,
       "owes": 0,
-      "flat": "pierwsze mieszkanie",
+      "flat": flat,
       "password": password
     });
   },

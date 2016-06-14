@@ -31,9 +31,9 @@ export default class ShoppingForm extends React.Component {
     return (
       <div className='row'>
       <form className="col s12" onSubmit={this.handleProductAdd}>
-        <h2 className="left-align"> Zakupy </h2><br/>
+        <h2 className="left-align"> Make them pay </h2><br/>
         <div className="input-field col s6">
-          <label htmlFor='buyer'>Kupuje:</label><br/>
+          <label htmlFor='buyer'>Buyer:</label><br/>
         <select id='buyer'  ref='buyer'>
             {this.props.flatmates.map(flatmate => {
               return <option key={flatmate.name}>{flatmate.name}</option>
@@ -41,7 +41,7 @@ export default class ShoppingForm extends React.Component {
           </select>
         </div>
         <div className="input-field col s6">
-          <label htmlFor='receiver'>Dla:</label><br/>
+          <label htmlFor='receiver'>For:</label><br/>
         <select id='receiver' ref='receiver'>
             {this.props.flatmates.map(flatmate => {
               return <option key={flatmate.name}>{flatmate.name}</option>
@@ -49,15 +49,15 @@ export default class ShoppingForm extends React.Component {
           </select>
         </div>
         <div className="input-field col s12">
-          <label htmlFor='products'>Produkty: </label><br/>
+          <label htmlFor='products'>Products: </label><br/>
         <textarea id='products' className="materialize-textarea"  ref='nameInput'/>
         </div>
         <div className="input-field col s12">
-          <label htmlFor='price' className="control-label">Cena (zł): </label><br/>
-        <input id='price' className='form-control' type='number' step="0.01"  ref='priceInput'/>
+          <label htmlFor='price' className="control-label">Price: </label><br/>
+          <input id='price' className='form-control' type='number' step="0.01" min={0}  ref='priceInput'/>
         </div>
         <div className="input-field col s12">
-          <button type='submit' className='btn btn-block waves-effect waves-light'>Dodaj do rozliczenia</button>
+          <button type='submit' className='btn btn-block waves-effect waves-light'>Add</button>
         </div>
       </form>
       </div>

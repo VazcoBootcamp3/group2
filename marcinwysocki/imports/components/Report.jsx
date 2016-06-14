@@ -11,10 +11,10 @@ export default class Report extends React.Component {
     return (
       <tr>
         <td>{flatmate.name} </td>
-        <td>{flatmate.owes} <b>zł</b></td>
+        <td>{flatmate.owes} zł</td>
         <td>
           {flatmate.owes !== 0
-            ? <button className="btn waves-effect waves-light" onClick={() => this.props.clearing(flatmate)}>Zeruj</button>
+            ? <button className="btn waves-effect waves-light" onClick={() => this.props.clearing(flatmate)}>Clear</button>
             : null}
         </td>
       </tr>
@@ -24,12 +24,12 @@ export default class Report extends React.Component {
   render() {
     return (
       <div className="col s12">
-        <h2 className="left-align">Raport należności</h2>
+        <h2 className="left-align">Debt report</h2>
         <table className="highlight bordered">
           <thead>
             <tr>
-              <th>Imię</th>
-              <th>Należność</th>
+              <th>Name</th>
+              <th>Debt</th>
               <th></th>
             </tr>
           </thead>
