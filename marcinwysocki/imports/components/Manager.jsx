@@ -10,7 +10,6 @@ export default class Manager extends React.Component {
     super(...args);
 
     this.state = {
-      flatmates: [],
       products: {},
       currentUser: {},
       activeTab: 'login'
@@ -18,7 +17,6 @@ export default class Manager extends React.Component {
 
     this.handleClearing = this.handleClearing.bind(this);
     this.calculateBills = this.calculateBills.bind(this);
-    this.updateflatmates = this.updateflatmates.bind(this);
     this.handleTabToggle = this.handleTabToggle.bind(this);
     this.renderContent = this.renderContent.bind(this);
     this.handleFlatmateRegistration = this.handleFlatmateRegistration.bind(this);
@@ -29,19 +27,10 @@ export default class Manager extends React.Component {
     this.handleTabToggle(this.state.activeTab);
   }
 
-  updateflatmates(updatedflatmates) {
-    this.setState({
-      flatmates: updatedflatmates
-    });
-  }
-
   handleTabToggle(tabID) {
     let list = document.getElementById('nav-mobile').children,
         i = 0,
         isLoggedIn = Object.keys(this.state.currentUser).length > 0;
-
-        console.log('keys',Object.keys(this.state.currentUser));
-
 
     if (tabID === this.state.activeTab) {
       return;
@@ -66,9 +55,9 @@ export default class Manager extends React.Component {
     //paskudny pseudo-routing
     switch (this.state.activeTab) {
       case 'shoppingForm':
-        return <ShoppingForm flatmates={this.state.flatmates} calculate={this.calculateBills}/>
+        return <ShoppingForm flatmates={this.props.flatmates} calculate={this.calculateBills}/>
       case 'report':
-        return <Report flatmates={this.state.flatmates} clearing={this.handleClearing}/>
+        return <Report flatmates={this.props.flatmates} clearing={this.handleClearing}/>
       case 'register':
         return <Register register={this.handleFlatmateRegistration}/>
       case 'login':
@@ -79,7 +68,7 @@ export default class Manager extends React.Component {
   }
 
   calculateBills(buyersName, receiversName, price) {
-    Meteor.call("calculateBills", this.state.flatmates, buyersName, receiversName, price,
+    Meteor.call("calculateBills", this.props.flatmates, buyersName, receiversName, price,
       (err, res) => {
         if (err) {
           console.error(err);
@@ -109,9 +98,8 @@ export default class Manager extends React.Component {
   }
 
   handleUserLogin(login, password, onWrongPswd) {
-    let {flatmatesColl} = this.props,
-        user = flatmatesColl.findOne({name: login}),
-        flatmates = [];
+    let {flatmates} = this.props,
+        user = flatmates.find(f => f.name === login);
 
     if (user.password !== password) {
       Materialize.toast('Wrong password!', 2000);
@@ -119,14 +107,10 @@ export default class Manager extends React.Component {
         onWrongPswd();
       }
     } else {
-      flatmates = flatmatesColl.find({flat: user.flat}).fetch();
-
       this.setState({
         currentUser: user,
         flatmates: flatmates
       }, () => this.handleTabToggle('shoppingForm'));
-
-      //this.handleTabToggle('shoppingForm');
     }
   }
 

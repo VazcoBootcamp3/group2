@@ -1,17 +1,19 @@
-// import React from 'react'
-// import {Col, FormGroup, FormControl, ControlLabel} from 'react-bootstrap'
-//
-// export default RoommatesSelect = (props) => {
-//   return(
-//     <Col xs={props.xs}>
-//       <FormGroup controlId={props.id}>
-//         <ControlLabel>{props.label}</ControlLabel>
-//         <FormControl componentClass='select' onChange={() => props.onSelectChange()}>
-//           {props.roomates.map(r => {
-//             return <option key={r.name}>{r.name}</option>
-//           })}
-//         </FormControl>
-//       </FormGroup>
-//     </Col>
-// );
-// }
+import React from 'react'
+
+export default RoommatesSelect = ({flatmates}) => {
+  return(
+    <div className='row'>
+    <form className="col s12">
+      <h2 className="left-align"> Make them pay </h2><br/>
+      <div className="input-field col s6">
+        <label htmlFor='buyer'>Buyer:</label><br/>
+      <select id='buyer'>
+          {flatmates.map(flatmate => {
+            return <option key={flatmate.name}>{flatmate.name}</option>
+          })}
+        </select>
+      </div>
+      </form>
+      </div>
+);
+}

@@ -1,16 +1,10 @@
 import {Meteor} from 'meteor/meteor';
-import {Tracker} from 'meteor/tracker';
+import {composeWithTracker} from 'react-komposer'
 import React from 'react';
 import {render} from 'react-dom';
 
-import Flatmates from '/imports/collections/Flatmates';
-import Manager from '/imports/components/Manager';
+import MainComposer from '/imports/components/MainComposer';
 
 Meteor.startup(() => {
-  Tracker.autorun(() => {
-     let flatmatesSub = Meteor.subscribe("flatmates-coll");
-     if (flatmatesSub.ready()) {
-       render(<Manager flatmatesColl={Flatmates} />, document.getElementById('app'));
-     }
-  });
-})
+    render(<MainComposer />, document.getElementById('app'));
+});
