@@ -8,6 +8,14 @@
     "meteor-node-stubs": "~0.2.0",
     "npm": "^3.9.5",
     "react": "^15.1.0",
+    "react-addons-create-fragment": "^15.1.0",
+    "react-addons-css-transition-group": "^15.1.0",
+    "react-addons-linked-state-mixin": "^15.1.0",
+    "react-addons-perf": "^15.1.0",
+    "react-addons-pure-render-mixin": "^15.1.0",
+    "react-addons-test-utils": "^15.1.0",
+    "react-addons-transition-group": "^15.1.0",
+    "react-addons-update": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-komposer": "^1.8.0"
   }

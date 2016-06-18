@@ -7,17 +7,26 @@ export default class Login extends React.Component {
     this.handleLogin = this.handleLogin.bind(this);
   }
 
-  handleLogin() {
-    const {loginInput, passwordInput} = this.refs;
+  componentWillMount() {
 
-      this.props.login(
-        loginInput.value,
-        passwordInput.value,
-        () => {
-          document.getElementById('password').value = '';
-        }
-      );
+  }
 
+  handleLogin(e) {
+    const {loginInput, passwordInput} = this.refs,
+          login = loginInput.value,
+          pass = passwordInput.value;
+
+    e.preventDefault();
+
+    Meteor.loginWithPassword(login, pass, (err) => {
+       if (err) {
+         Materialize.toast('Error logging in!', 2000);
+       } else {
+         Materialize.toast('Logged in', 2000);
+       }
+    });
+
+    document.getElementById('password').value = '';
   }
 
   render() {

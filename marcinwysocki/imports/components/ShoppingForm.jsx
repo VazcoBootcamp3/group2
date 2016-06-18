@@ -36,7 +36,7 @@ export default class ShoppingForm extends React.Component {
           <label htmlFor='buyer'>Buyer:</label><br/>
         <select id='buyer'  ref='buyer'>
             {this.props.flatmates.map(flatmate => {
-              return <option key={flatmate.name}>{flatmate.name}</option>
+              return <option key={flatmate.username}>{flatmate.username}</option>
             })}
           </select>
         </div>
@@ -44,7 +44,7 @@ export default class ShoppingForm extends React.Component {
           <label htmlFor='receiver'>For:</label><br/>
         <select id='receiver' ref='receiver'>
             {this.props.flatmates.map(flatmate => {
-              return <option key={flatmate.name}>{flatmate.name}</option>
+              return <option key={flatmate.username}>{flatmate.username}</option>
             })}
           </select>
         </div>

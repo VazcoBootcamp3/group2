@@ -1,4 +1,6 @@
 import React from 'react'
+import {Accounts} from 'meteor/accounts-base'
+import {Meteor} from 'meteor/meteor'
 
 export default class Register extends React.Component {
   constructor(...args) {
@@ -7,21 +9,43 @@ export default class Register extends React.Component {
     this.handleRegistration = this.handleRegistration.bind(this);
   }
 
-  handleRegistration() {
-    const {loginInput, passwordInput, confirmPasswordInput, flatInput} = this.refs;
+  handleRegistration(e) {
+    const {loginInput, passwordInput, confirmPasswordInput, flatInput} = this.refs,
+          pass = passwordInput.value,
+          login = loginInput.value,
+          flat = flatInput.value;
+
+    e.preventDefault();
 
     if (passwordInput.value === confirmPasswordInput.value) {
-      this.props.register(
-        loginInput.value,
-        passwordInput.value,
-        flatInput.value,
-        () => {
-          document.getElementById('login').value = '';
-          document.getElementById('flat').value = '';
-          document.getElementById('password').value = '';
-          document.getElementById('confirmPassword').value = '';
+      let userObject = {
+        username: login,
+        password: pass,
+        profile: {
+          flat: flat
         }
-      );
+      };
+
+      Accounts.createUser(userObject, (err) => {
+        if (err) {
+          Materialize.toast('Error creating an account!', 2000);
+        } else {
+          Materialize.toast('Registered', 2000);
+          Meteor.loginWithPassword(login, pass, (err) => {
+             if (err) {
+               Materialize.toast('Error logging in!', 2000);
+             } else {
+               Materialize.toast('Logged in', 2000);
+                   console.log("register - login", Meteor.user());
+             }
+          });
+        }
+      });
+
+      document.getElementById('login').value = '';
+      document.getElementById('flat').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('confirmPassword').value = '';
     }
   }
 

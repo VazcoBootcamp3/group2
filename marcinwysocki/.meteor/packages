@@ -20,3 +20,6 @@ insecure                # Allow all DB writes from clients (for prototyping)
 static-html
 materialize:materialize
 fourseven:scss
+kadira:flow-router
+kadira:react-layout
+accounts-password
