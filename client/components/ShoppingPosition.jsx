@@ -2,7 +2,7 @@ import React from 'react';
 import FontIcon from 'material-ui/svg-icons/navigation/check';
 import IconButton from 'material-ui/IconButton';
 import {TableRow, TableRowColumn} from 'material-ui';
-
+import { Meteor } from 'meteor/meteor';
 
 
 
@@ -38,13 +38,7 @@ onHoverExit (e) {
 }
 
 handleDelete (e) {
-    this.props.deletePosition(this.props.shoppingObject.id);
-    // Actions.deleteScoreNode({
-    //   // e: e,
-    //   // index: this.props.index,
-    //   // scores: this.props.recentScores,
-    //   // player: this.props.player
-    // });
+    Meteor.call('expenses.remove', this.props.shoppingObject._id);
   }
 
 

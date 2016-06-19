@@ -7,15 +7,14 @@ export default class ShoppingTable extends React.Component {
     super();
     }
 
-
+    renderExpenses() {
+       return this.props.shopping.map((expense) => (
+         <ShoppingPosition key={expense._id} shoppingObject={expense} />
+       ));
+     }
 
   render() {
-    var contentToRender = [];
-    var counter = 0;
-    for(let shpg of this.props.shopping) {
-      contentToRender.push(<ShoppingPosition key={counter} shoppingObject={shpg} deletePosition={this.props.deletePosition}/> );
-      counter++;
-    }
+
 
     return (
       <Table >
@@ -29,7 +28,7 @@ export default class ShoppingTable extends React.Component {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
-          {contentToRender}
+          {this.renderExpenses()}
         </TableBody>
 
       </Table>

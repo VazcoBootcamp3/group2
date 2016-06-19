@@ -1,15 +1,14 @@
 import React from 'react';
 import {TextField, RaisedButton, SelectField, MenuItem} from 'material-ui';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as shoppingActions from '../actions/shoppingActions';
+import {Meteor} from 'meteor/meteor';
 
 
-class ShoppingForm extends React.Component {
+export default class ShoppingForm extends React.Component {
 
   constructor() {
     super();
     this.submitForm = this.submitForm.bind(this);
+    this.handleSelectFieldChange = this.handleSelectFieldChange.bind(this);
 
 
     this.state = {
@@ -38,7 +37,7 @@ class ShoppingForm extends React.Component {
     var object = {};
     object = this.state;
     console.log(`submitFrom(): ${JSON.stringify(object)}`);
-    this.props.actions.addShopping(object);
+    Meteor.call('expenses.add', object);
     this.setState({
       buyer: '',
       productList: '',
@@ -54,15 +53,23 @@ class ShoppingForm extends React.Component {
  }
 
 
+
+ handleSelectFieldChange(event, index, value) {
+   var object = {};
+   object['buyer'] = value;
+   this.setState(object);
+ }
+
+
   render() {
 
     return (
       <div>
-        <SelectField uniqueName="buyer" value={this.state.buyer}
-          hintText="Kupujący" onChange={this.setValue.bind(this, 'buyer')}>
-          <MenuItem value={1} primaryText="Filip" />
-          <MenuItem value={2} primaryText="Jakub" />
-          <MenuItem value={3} primaryText="Adam" />
+        <SelectField uniqueName="buyer" value={this.state.buyer} onChange={this.handleSelectFieldChange}
+          hintText="Kupujący" >
+          <MenuItem value={'Filip'} primaryText="Filip" />
+          <MenuItem value={'Jakub'} primaryText="Jakub" />
+          <MenuItem value={'Adam'} primaryText="Adam" />
         </SelectField>
       <br/>
         <TextField fullWidth={true} multiLine={true}
@@ -99,17 +106,3 @@ class ShoppingForm extends React.Component {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    shopping: state.shopping
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(shoppingActions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ShoppingForm);
