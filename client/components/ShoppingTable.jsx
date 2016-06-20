@@ -20,6 +20,7 @@ export default class ShoppingTable extends React.Component {
       <Table >
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow >
+            <TableHeaderColumn>Grupa</TableHeaderColumn>
             <TableHeaderColumn>Kupujący</TableHeaderColumn>
             <TableHeaderColumn>Lista produktów</TableHeaderColumn>
             <TableHeaderColumn>Zapłacono</TableHeaderColumn>

@@ -6,7 +6,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import TextField from 'material-ui/TextField';
 import {lightBlue500, purple500} from 'material-ui/styles/colors';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 import Navbar from './Navbar';
 
 
@@ -26,7 +25,7 @@ const muiTheme = getMuiTheme({
 export default class App extends React.Component {
   constructor(){
     super();
-
+    const userData = Meteor.subscribe('getUserData');
     injectTapEventPlugin();
 
 
@@ -41,11 +40,11 @@ export default class App extends React.Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
             {this.props.navbar}
-            <AccountsUIWrapper />
+
             <div style={{paddingTop: '50px'}}>
               <Grid>
                 <Row>
-                  <Col mdOffset={1} md={8} >
+                  <Col mdOffset={1} md={10} >
                     {this.props.content}
                   </Col>
                 </Row>

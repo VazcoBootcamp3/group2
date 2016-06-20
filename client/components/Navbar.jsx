@@ -7,30 +7,35 @@ import IconButton from 'material-ui/IconButton';
 import Snackbar from 'material-ui/Snackbar';
 import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import FlatButton from 'material-ui/FlatButton';
+import Drawer from 'material-ui/Drawer';
+import Avatar from 'material-ui/Avatar';
+import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+
 
 
 export default class Navbar extends React.Component {
 
   constructor() {
     super();
-    this.handleTouchTap = this.handleTouchTap.bind(this);
+    this.handleOpenMenu = this.handleOpenMenu.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
     this.handleSnackbarOpen = this.handleSnackbarOpen.bind(this);
+    this.handleClickMenuItem = this.handleClickMenuItem.bind(this);
 
     this.state = {
       open: false,
       openReport:false,
       snackbarOpen: false,
     }
+
   }
 
-   handleTouchTap(event) {
+  handleOpenMenu(event) {
     event.preventDefault();
     console.log('handleTouchTap');
     this.setState({
-      open: true,
-      anchorEl: event.currentTarget,
+      open: !this.state.open,
     });
   };
 
@@ -52,27 +57,45 @@ export default class Navbar extends React.Component {
      });
    }
 
+   handleClickMenuItem() {
+     this.setState({
+       open: false
+     })
+   }
+
 
   render() {
+    var facebookId;
+    var name;
+    if(!!Meteor.user()){
+      facebookId = Meteor.user().services.facebook.id;
+      name = Meteor.user().services.facebook.name;
+    }
+    else {
+      facebookId = 'abc';
+      name = 'niezalogowany';
+    }
+
     return (
       <div>
         <AppBar
           title="Expense Share"
-          iconElementLeft={<IconButton onClick={this.handleTouchTap} onMouseEnter={this.handleTouchTap}><MenuIcon /></IconButton>}
-          iconElementRight={<FlatButton onClick={this.handleSnackbarOpen} label="Wyloguj"/>}
+          iconElementLeft={<IconButton onClick={this.handleOpenMenu}><MenuIcon /></IconButton>}
+          iconElementRight={  <AccountsUIWrapper />}
           />
-        <Popover
-          open={this.state.open}
-          anchorEl={this.state.anchorEl}
-          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-          targetOrigin={{horizontal: 'left', vertical: 'top'}}
-          onRequestClose={this.handleRequestClose}
-        >
-          <Menu>
-            <MenuItem primaryText="Dodaj zakupy" href="/add"/>
-            <MenuItem primaryText="Raport" href="/report"/>
-          </Menu>
-        </Popover>
+          <Drawer
+            docked={false}
+            width={200}
+            open={this.state.open}
+            onRequestChange={(open) => this.setState({open})}
+          >
+            <MenuItem disabled={true}> <Avatar size={140} src={`http://graph.facebook.com/${facebookId}/picture?type=large`} /> </MenuItem>
+            <MenuItem disabled={true}>Filip Czabator</MenuItem>
+            <MenuItem onClick={this.handleClickMenuItem} primaryText="Dodaj zakupy" href="/add"/>
+            <MenuItem onClick={this.handleClickMenuItem} primaryText="Raport" href="/report"/>
+          </Drawer>
+
+
 
         <Snackbar
         open={this.state.snackbarOpen}

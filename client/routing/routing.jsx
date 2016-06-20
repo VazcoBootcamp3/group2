@@ -8,7 +8,7 @@ import StartPage from '../components/StartPage';
 
 FlowRouter.route("/", {
   action () {
-    mount(StartPage, {} );
+      mount(App, {navbar: <Navbar/>, content:  <ReportView/>} );
   }
 });
 

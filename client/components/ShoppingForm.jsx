@@ -8,14 +8,14 @@ export default class ShoppingForm extends React.Component {
   constructor() {
     super();
     this.submitForm = this.submitForm.bind(this);
-    this.handleSelectFieldChange = this.handleSelectFieldChange.bind(this);
-
+    this.handleSelectChargedChange = this.handleSelectChargedChange.bind(this);
+    this.handleSelectGroupChange = this.handleSelectGroupChange.bind(this);
 
     this.state = {
-      buyer: '',
+      group: '',
       productList: '',
       amount: '',
-      owner: '',
+      charged: '',
     };
   }
 
@@ -39,10 +39,11 @@ export default class ShoppingForm extends React.Component {
     console.log(`submitFrom(): ${JSON.stringify(object)}`);
     Meteor.call('expenses.add', object);
     this.setState({
-      buyer: '',
       productList: '',
       amount: '',
-      owner: '',});
+      charged: '',
+      groupa: ''
+    });
 
   }
 
@@ -54,9 +55,15 @@ export default class ShoppingForm extends React.Component {
 
 
 
- handleSelectFieldChange(event, index, value) {
+ handleSelectChargedChange(event, index, value) {
    var object = {};
-   object['buyer'] = value;
+   object['charged'] = value;
+   this.setState(object);
+ }
+
+ handleSelectGroupChange(event, index, value) {
+   var object = {};
+   object['group'] = value;
    this.setState(object);
  }
 
@@ -65,8 +72,15 @@ export default class ShoppingForm extends React.Component {
 
     return (
       <div>
-        <SelectField uniqueName="buyer" value={this.state.buyer} onChange={this.handleSelectFieldChange}
-          hintText="Kupujący" >
+        <SelectField uniqueName="group" value={this.state.group} onChange={this.handleSelectGroupChange}
+          hintText="Grupa" >
+          <MenuItem value={'grupa 1'} primaryText="grupa 1" />
+          <MenuItem value={'grupa 2'} primaryText="grupa 2" />
+          <MenuItem value={'grupa 3'} primaryText="grupa 3" />
+        </SelectField>
+      <br/>
+        <SelectField uniqueName="charged" value={this.state.charged} onChange={this.handleSelectChargedChange}
+          hintText="Dłużny" >
           <MenuItem value={'Filip'} primaryText="Filip" />
           <MenuItem value={'Jakub'} primaryText="Jakub" />
           <MenuItem value={'Adam'} primaryText="Adam" />
@@ -86,13 +100,6 @@ export default class ShoppingForm extends React.Component {
             hintText="Zapłacono"
           />
           <br />
-        <TextField fullWidth={true}
-          uniqueName="owner"
-          value={this.state.owner}
-          onChange={this.setValue.bind(this, 'owner')}
-          hintText="Kto winien"
-        />
-        <br />
         <div style={{paddingTop: '30px'}}>
           <RaisedButton label="Dodaj do listy" secondary={true} onClick={this.submitForm}/>
         </div>

@@ -18,6 +18,6 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 static-html
 accounts-ui
-accounts-password
-accounts-facebook
 kadira:flow-router
+msavin:mongol
+accounts-facebook

@@ -47,10 +47,11 @@ handleDelete (e) {
   render() {
     return(
       <TableRow hoverable={true} onCellHover={this.onHover} onCellHoverExit={this.onHoverExit}>
-        <TableRowColumn>{this.props.shoppingObject.buyer}</TableRowColumn>
-        <TableRowColumn>{this.props.shoppingObject.productList}</TableRowColumn>
-        <TableRowColumn>{this.props.shoppingObject.amount}</TableRowColumn>
-        <TableRowColumn>{this.props.shoppingObject.owner}</TableRowColumn>
+        <TableRowColumn>{this.props.shoppingObject.expense.group}</TableRowColumn>
+        <TableRowColumn>{this.props.shoppingObject.username}</TableRowColumn>
+        <TableRowColumn>{this.props.shoppingObject.expense.productList}</TableRowColumn>
+        <TableRowColumn>{this.props.shoppingObject.expense.amount}</TableRowColumn>
+        <TableRowColumn>{this.props.shoppingObject.expense.charged}</TableRowColumn>
         <TableRowColumn>
           {this.state.showDelete ?
             <IconButton onClick={this.handleDelete}>

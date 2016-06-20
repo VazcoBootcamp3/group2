@@ -5,8 +5,8 @@ function composer(props, onData) {
   const handle = Meteor.subscribe("expenses");
   if (handle.ready()) {
     const expenses = Expenses.find().fetch();
-    onData(null, {expenses}); 
+    onData(null, {expenses});
   };
-};
+};  
 
 export default composeWithTracker(composer)(ReportView);
