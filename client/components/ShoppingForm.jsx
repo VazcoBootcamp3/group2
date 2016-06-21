@@ -42,7 +42,7 @@ export default class ShoppingForm extends React.Component {
       productList: '',
       amount: '',
       charged: '',
-      groupa: ''
+      group: ''
     });
 
   }

@@ -10,6 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
 import Avatar from 'material-ui/Avatar';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+import Divider from 'material-ui/Divider';
 
 
 
@@ -76,6 +77,11 @@ export default class Navbar extends React.Component {
       name = 'niezalogowany';
     }
 
+    var userNameStyle = {
+      textAlign: 'center'
+    };
+
+
     return (
       <div>
         <AppBar
@@ -90,9 +96,12 @@ export default class Navbar extends React.Component {
             onRequestChange={(open) => this.setState({open})}
           >
             <MenuItem disabled={true}> <Avatar size={140} src={`http://graph.facebook.com/${facebookId}/picture?type=large`} /> </MenuItem>
-            <MenuItem disabled={true}>Filip Czabator</MenuItem>
+            <MenuItem style={userNameStyle} disabled={true}>{name}</MenuItem>
+            <Divider  />
             <MenuItem onClick={this.handleClickMenuItem} primaryText="Dodaj zakupy" href="/add"/>
             <MenuItem onClick={this.handleClickMenuItem} primaryText="Raport" href="/report"/>
+            <MenuItem onClick={this.handleClickMenuItem} primaryText="Grupy" href="/groups"/>
+            <MenuItem onClick={this.handleClickMenuItem} primaryText="Stwórz grupę" href="/createGroup"/>
           </Drawer>
 
 
